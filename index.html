@@ -360,11 +360,11 @@
       background: #fff;
     }
     .fcard-2 img { width: 132px; }
-    .folder-item:nth-child(1) .fcard-1 img { width: 114px; }
-    .folder-item:nth-child(1) .fcard-2 img { width: 176px; }
-    .folder-item:nth-child(2) .fcard-1 img { width: 173px; }
-    .folder-item:nth-child(2) .fcard-2 img { width: 136px; }
-    .folder-item:nth-child(3) .fcard-2 img { width: 160px; }
+    .folder-item:nth-child(1) .fcard-2 img { width: 150px; }           /* Frilea */
+    .folder-item:nth-child(2) .fcard-2 img { width: 118px; }           /* Royal London */
+    .folder-item:nth-child(2) .fcard-3 img { background: #fff; }       /* Royal London tool icon */
+    .folder-item:nth-child(3) .fcard-1 img { width: 114px; }           /* Farmacias */
+    .folder-item:nth-child(3) .fcard-2 img { width: 176px; }           /* Farmacias */
 
     .fcard-3 img {
       width: 68px;
@@ -856,22 +856,23 @@
     .case-grid > .case-block-img { margin-bottom: 0; }
 
     .research-stretch {
-      align-self: start;
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
       border-radius: 0 !important;
       box-shadow: none !important;
-      transform: scale(0.9);
-      transform-origin: top left;
     }
-    .case-list .case-card:nth-child(1) .research-stretch { transform: scale(0.99); }
-    .case-list .case-card:nth-child(2) .research-stretch { transform: none; align-self: end; }
-    .case-list .case-card:nth-child(2) .case-grid > .case-block:last-child { margin-top: -2rem; }
     .research-stretch img,
     .research-stretch video {
+      flex: 1;
+      min-height: 0;
       width: 100%;
-      height: auto;
+      object-fit: cover;
+      object-position: center top;
       display: block;
-      object-fit: contain;
     }
+    .case-list .case-card:nth-child(1) .research-stretch img { object-fit: contain; object-position: center; background: var(--bg); }
+    .case-list .case-card:nth-child(2) .research-stretch img { object-position: left top; }
 
     .case-video-block { cursor: zoom-in; }
 
@@ -886,12 +887,12 @@
     }
     .case-img-pair .case-img-break { margin: 0; }
 
-    .pair-result { flex: 1 1 0; min-width: 380px; }
-    .pair-result img { width: 100%; height: clamp(220px, 26.5vw, 340px); object-fit: contain; object-position: center; display: block; }
+    .pair-result { flex-shrink: 0; }
+    .pair-result img { height: 340px; width: auto; display: block; }
 
-    .pair-journey { flex: 1 1 0; min-width: 380px; }
+    .pair-journey { flex: 1; min-width: 0; }
     .pair-journey .case-img-break { background: #fff; }
-    .pair-journey img { width: 100%; height: clamp(220px, 26.5vw, 340px); object-fit: contain; object-position: center; display: block; }
+    .pair-journey img { width: 100%; height: 340px; object-fit: contain; object-position: center; display: block; }
 
     /* ─── CAROUSEL CHEVRONS ──────────────────────────────────── */
     .case-carousel { position: relative; }
@@ -946,14 +947,24 @@
       cursor: zoom-in;
     }
 
-    .proto-card img {
+    .proto-card img,
+    .proto-card video {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
       transition: transform .35s ease;
     }
-    .proto-card:hover img { transform: scale(1.03); }
+    .proto-card:hover img,
+    .proto-card:hover video { transform: scale(1.03); }
+
+    .proto-card--concept video {
+      width: calc(100% + 8px);
+      height: calc(100% + 8px);
+      margin: -4px;
+    }
+
+    .proto-card--concept { flex: 1 0 0; min-width: 180px; aspect-ratio: 1 / 1; }
 
     .proto-label {
       position: absolute;
@@ -963,7 +974,7 @@
       font-weight: 900;
       letter-spacing: .18em;
       text-transform: uppercase;
-      color: rgba(255,255,255,.75);
+      color: var(--green);
       transition: opacity .2s ease;
     }
     .proto-card:hover .proto-label { opacity: 0; }
@@ -1225,9 +1236,9 @@
       .folder-imgs { width: 210px; bottom: 38px; }
       .fcard img { width: 68px; }
       .fcard-2 img { width: 86px; }
-      .folder-item:nth-child(1) .fcard-2 img { width: 98px; }
-      .folder-item:nth-child(2) .fcard-2 img { width: 108px; }
-      .folder-item:nth-child(3) .fcard-2 img { width: 98px; }
+      .folder-item:nth-child(1) .fcard-2 img { width: 92px; }   /* Frilea */
+      .folder-item:nth-child(2) .fcard-2 img { width: 72px; }   /* Royal London */
+      .folder-item:nth-child(3) .fcard-2 img { width: 108px; }  /* Farmacias */
       .fcard-3 img { width: 44px; }
       .folder-item:hover .fcard-1 { transform: translateX(calc(-50% - 40px)) translateY(-110px) rotate(-14deg); }
       .folder-item:hover .fcard-2 { transform: translateX(-50%) translateY(-122px) rotate(2deg); }
@@ -1239,10 +1250,10 @@
       .case-body-inner { padding: 1.5rem 1.5rem 3rem; }
       .case-grid { grid-template-columns: 1fr; gap: 2rem; }
       .case-takeaways { margin-top: 0; }
-      .case-img-pair { margin: 1.5rem 0; flex-direction: column; flex-wrap: nowrap; }
-      .pair-result, .pair-journey { flex: none; width: 100%; min-width: 0; }
+      .case-img-pair { margin: 1.5rem 0; flex-direction: column; }
+      .pair-result { flex-shrink: unset; }
       .pair-result img { height: 260px; width: 100%; object-fit: contain; object-position: center; }
-      .pair-journey img { height: 260px; width: 100%; object-fit: contain; object-position: center; }
+      .pair-journey img { height: 260px; width: 100%; object-fit: cover; object-position: center top; }
       footer { grid-template-columns: 1fr; padding: 2.5rem 1.5rem; gap: 1.25rem; }
       .footer-links { justify-content: flex-start; }
       .footer-copy { text-align: left; }
@@ -1295,8 +1306,36 @@
 
     <div class="cards-stack fade-up" style="transition-delay:.18s">
 
-      <!-- Farmacias Peruanas · purple folder -->
+      <!-- Frilea · green folder -->
       <div class="folder-item" onclick="openProject(0)">
+        <div class="folder-imgs">
+          <div class="fcard fcard-1"><img src="Frilea/Test.png" alt="Test" /></div>
+          <div class="fcard fcard-2"><img src="Frilea/Working.png" alt="Product screens" /></div>
+          <div class="fcard fcard-3"><img src="Frilea/Figma.png" alt="Figma" /></div>
+        </div>
+        <img class="folder-icon-img" src="Frilea/Folder verde.png" alt="Frilea" />
+        <div class="folder-label">
+          <div class="folder-name">Frilea</div>
+          <div class="folder-sub">Fintech for Freelancers</div>
+        </div>
+      </div>
+
+      <!-- Royal London · celeste folder -->
+      <div class="folder-item" onclick="openProject(1)">
+        <div class="folder-imgs">
+          <div class="fcard fcard-1"><img src="Royal London/Declaration of health research.png" alt="Research" /></div>
+          <div class="fcard fcard-2"><img src="Royal London/Declaration of Health Results.png" alt="Result" /></div>
+          <div class="fcard fcard-3"><img src="Royal London/User testing.png" alt="User testing" /></div>
+        </div>
+        <img class="folder-icon-img" src="Royal London/Folder celeste.png" alt="Royal London" />
+        <div class="folder-label">
+          <div class="folder-name">Royal London</div>
+          <div class="folder-sub">Declaration of Health</div>
+        </div>
+      </div>
+
+      <!-- Farmacias Peruanas · purple folder -->
+      <div class="folder-item" onclick="openProject(2)">
         <div class="folder-imgs">
           <div class="fcard fcard-1"><img src="Farmacias peruanas/Farmacias peruanas research 1.jpg" alt="Research" /></div>
           <div class="fcard fcard-2"><img src="Farmacias peruanas/Farmacias peruanas result.png" alt="Result" /></div>
@@ -1306,34 +1345,6 @@
         <div class="folder-label">
           <div class="folder-name">Farmacias Peruanas</div>
           <div class="folder-sub">Operations Platform</div>
-        </div>
-      </div>
-
-      <!-- Autodesk · blue folder -->
-      <div class="folder-item" onclick="openProject(1)">
-        <div class="folder-imgs">
-          <div class="fcard fcard-1"><img src="Autodesk/Autodesk result 1.png" alt="Result" /></div>
-          <div class="fcard fcard-2"><img src="Autodesk/Autodesk research.png" alt="Research" /></div>
-          <div class="fcard fcard-3"><img src="Autodesk/User testing.png" alt="User testing icon" /></div>
-        </div>
-        <img class="folder-icon-img" src="Autodesk/Folder verde.png" alt="Autodesk" />
-        <div class="folder-label">
-          <div class="folder-name">Autodesk</div>
-          <div class="folder-sub">Design System Migration</div>
-        </div>
-      </div>
-
-      <!-- NHS AfterCare · green folder -->
-      <div class="folder-item" onclick="openProject(2)">
-        <div class="folder-imgs">
-          <div class="fcard fcard-1"><img src="NHS/AfterCare Research.jpg" alt="Research" /></div>
-          <div class="fcard fcard-2"><img src="NHS/AfterCare Result.jpg"   alt="App screens" /></div>
-          <div class="fcard fcard-3"><img src="NHS/Figma.png"  alt="Figma" /></div>
-        </div>
-        <img class="folder-icon-img" src="NHS/Folder celeste.png" alt="NHS Pioneer" />
-        <div class="folder-label">
-          <div class="folder-name">NHS Pioneer</div>
-          <div class="folder-sub">AfterCare+</div>
         </div>
       </div>
 
@@ -1532,10 +1543,153 @@
 
   <div class="case-list">
 
-    <!-- 01 Farmacias Peruanas Operations Platform -->
+    <!-- 01 Frilea -->
     <div class="case-card fade-up">
       <div class="case-header" onclick="toggleCase(this)">
         <div class="case-num">01</div>
+        <div>
+          <div class="case-title">Frilea</div>
+          <div class="case-org">Interbank</div>
+        </div>
+        <div class="case-toggle">+</div>
+      </div>
+      <div class="case-body">
+        <div class="case-body-inner">
+          <div class="case-grid">
+            <div class="case-block">
+              <div class="case-block-label">Context</div>
+              <p>Peru has a large informal economy and a significant portion of the workforce operates outside traditional employment structures. Freelancers earn variable income and rarely have the payslips or employment contracts that banks require to open accounts or access credit. In 2019, the CEO of Interbank challenged Labentana Innovation Lab and the Digital Channels Team to answer a single question: how might we offer a valuable financial alternative to unbanked people? Even with a hypothesis in mind, they wanted the team to do the research first and find out who the real user was and whether the idea held up.</p>
+            </div>
+            <div class="case-block">
+              <div class="case-block-label">Problem</div>
+              <p>Existing banking products were built around salaried employment: fixed monthly income, regular payments, predictable behaviour. Freelancers did not fit that model. Standard onboarding required documents they did not have. The challenge was not to improve an existing product for this segment. It was to find out whether a product for them made sense at all, and if so, what it should be.</p>
+            </div>
+            <div class="case-block">
+              <div class="case-block-label">Design Process</div>
+              <ul>
+                <li><strong>Discovery:</strong> Working alongside business designers and researchers, I led the service design work across discovery and concept validation. Desk research, expert interviews and field interviews with independently employed people pointed us toward a specific segment: freelancers aged 20–40, with internet access and variable income, who distrusted formal financial institutions. We called them <em>los inconformes</em> — pragmatic, cautious about debt, and allergic to paperwork.</li>
+                <li><strong>Three pain points identified:</strong> No access to employment benefits like healthcare or compensation; payment and tax complexity keeping them unbanked — the system felt impossible to navigate alone, more than unwillingness; and no guaranteed pipeline of work, the pain point that came up most consistently across interviews.</li>
+                <li><strong>Three concepts:</strong> Each designed to address one pain point directly. Tribu: a community platform where freelancers could organise collectively to negotiate group health insurance and other benefits. Quadre: an income management tool that auto-calculated tax obligations from incoming payments. Freelea: matched freelancers with relevant gigs while acting as a financial intermediary, building their credit score in parallel.</li>
+              </ul>
+            </div>
+            <div class="case-block-img research-stretch" onclick="openLightbox(0,0)">
+              <img src="Frilea/Workshop.png" alt="Workshop" />
+            </div>
+            <div class="case-block">
+              <div class="case-block-label">Outcomes</div>
+              <div class="outcome-chips">
+                <span class="outcome-chip">Three service concepts developed and tested via live social media experiment</span>
+                <span class="outcome-chip">400+ sign-ups in four days validated genuine demand before any build</span>
+                <span class="outcome-chip">Target segment redefined from individual freelancers to small independent businesses</span>
+                <span class="outcome-chip">Concept seeded into Labentana incubator and launched as a live product within Interbank's suite</span>
+              </div>
+            </div>
+            <div class="case-block">
+              <div class="case-block-label">Solution</div>
+              <p>Before committing to any build, we ran a social media experiment to test which concept generated the most genuine demand. Freelea got a 1.9% CTR and more than 400 sign-ups in four days, with no product built yet. That data became the business case for taking the concept into Labentana's incubator. The Wizard of Oz phase that followed sharpened the direction further: by simulating the service manually with real users, we found that the strongest fit was not the individual freelancer we had originally designed for, but small independent businesses looking for talent. The validated concept was later renamed Frilea and developed into a live product by a subsequent team.</p>
+            </div>
+          </div>
+          <div class="case-img-pair">
+            <div class="case-img-break pair-result" onclick="openLightbox(0,1)">
+              <img src="Frilea/Working.png" alt="Product screens" />
+            </div>
+            <div class="case-img-break pair-journey" onclick="openLightbox(0,5)">
+              <img src="Frilea/Research.png" alt="Research" />
+            </div>
+          </div>
+          <div class="proto-pair">
+            <div class="proto-card proto-card--concept" onclick="handleVideoCard(this,0,2)" aria-label="Watch Tribu concept">
+              <video src="Frilea/Tribu_v2.mp4" muted loop playsinline preload="metadata" data-poster-time="24.45"></video>
+              <div class="proto-label">Tribu</div>
+              <div class="proto-overlay"><span class="proto-cta">▶ Play</span></div>
+            </div>
+            <div class="proto-card proto-card--concept" onclick="handleVideoCard(this,0,3)" aria-label="Watch Quadre concept">
+              <video src="Frilea/Quadre_v2.mp4" muted loop playsinline preload="metadata" data-poster-time="8.28"></video>
+              <div class="proto-label">Quadre</div>
+              <div class="proto-overlay"><span class="proto-cta">▶ Play</span></div>
+            </div>
+            <div class="proto-card proto-card--concept" onclick="handleVideoCard(this,0,4)" aria-label="Watch Freelea concept">
+              <video src="Frilea/Freelea_v2.mp4" muted loop playsinline preload="metadata" data-poster-time="21.06"></video>
+              <div class="proto-label">Freelea</div>
+              <div class="proto-overlay"><span class="proto-cta">▶ Play</span></div>
+            </div>
+          </div>
+          <div class="case-block case-takeaways">
+            <div class="case-block-label">Takeaways</div>
+            <p>The most useful thing we did was not design a product. It was design the test. Running a real ad rather than a workshop simulation gave us signal we could trust. The 400 sign-ups told us the problem was real. The Wizard of Oz told us who the actual user was. Both of those came before a single screen was designed, and both of them shaped everything that followed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 Royal London Declaration of Health -->
+    <div class="case-card fade-up" style="transition-delay:.1s">
+      <div class="case-header" onclick="toggleCase(this)">
+        <div class="case-num">02</div>
+        <div>
+          <div class="case-title">Declaration of Health</div>
+          <div class="case-org">Royal London</div>
+        </div>
+        <div class="case-toggle">+</div>
+      </div>
+      <div class="case-body">
+        <div class="case-body-inner">
+          <div class="case-grid">
+            <div class="case-block">
+              <div class="case-block-label">Context</div>
+              <p>Royal London is the UK's largest mutual life insurance company. Protection customers manage their policies through independent financial advisers, which means Royal London often has limited direct contact with end customers. This project sat within the protection servicing team and focused on the communications customers receive when their policy is at risk of lapsing.</p>
+            </div>
+            <div class="case-block">
+              <div class="case-block-label">Problem</div>
+              <p>When a customer misses payments and their policy lapses, Royal London sends a Declaration of Health form to reinstate it. The problem came to light through a complaint: a customer had just been diagnosed with cancer. In the stress of that, she missed an automatic payment, her policy lapsed, and when she tried to reinstate it she completed the declaration honestly. Because of her diagnosis, we could not take her on again. The process had worked exactly as designed. But it had failed her completely. The real issue lived earlier in the journey, in how we communicated before customers ever reached that form.</p>
+            </div>
+            <div class="case-block">
+              <div class="case-block-label">Design Process</div>
+              <ul>
+                <li><strong>Research and iteration:</strong> Ran 5 rounds of qualitative testing with 24 participants total through UserTesting, using the actual letters as artefacts to anchor conversations. Participants included customers who had experienced financial hardship, serious illness or bereavement.</li>
+                <li><strong>Synthesis:</strong> Each round revealed where the tone was missing, where the information was unclear, and where customers felt abandoned rather than supported. The key reframe was that the problem was not the Declaration of Health form itself but how little support existed before customers ever got there.</li>
+                <li><strong>Stakeholder alignment:</strong> Facilitated feedback sessions with marketing, subject matter experts and vulnerable customer panels to pressure-test tone, clarity and accessibility across the full journey.</li>
+                <li><strong>Communication redesign:</strong> Redesigned the full arc of lapse communications, adding a new reminder stage and integrating Helping Hand support resources and simplified payment update instructions throughout.</li>
+              </ul>
+            </div>
+            <div class="case-block-img research-stretch" onclick="openLightbox(1,0)">
+              <img src="Royal London/Declaration of health research.png" alt="Research" />
+            </div>
+            <div class="case-block">
+              <div class="case-block-label">Outcomes</div>
+              <div class="outcome-chips">
+                <span class="outcome-chip">3-stage communication journey designed to replace single notice</span>
+                <span class="outcome-chip">24 vulnerable customers involved in iterative qualitative testing across 5 rounds</span>
+                <span class="outcome-chip">Helping Hand resources integrated across all lapse communications</span>
+                <span class="outcome-chip">Clear payment update instructions added to reduce friction for customers in distress</span>
+                <span class="outcome-chip">Designs handed over to implementation team at project close</span>
+              </div>
+            </div>
+            <div class="case-block">
+              <div class="case-block-label">Solution</div>
+              <p>Redesigned the full communication journey for lapsing policies. Added a new reminder letter 20 days after the first notice, creating a 3-stage arc: warning at 35 days, reminder at 20 days, confirmation of cancellation. All three letters now include signposting to Helping Hand, Royal London's free wellbeing service. QR codes were added for easy mobile access. Instructions for updating payment methods were simplified and made prominent throughout.</p>
+            </div>
+          </div>
+          <div class="case-img-pair">
+            <div class="case-img-break pair-result" onclick="openLightbox(1,1)">
+              <img src="Royal London/Declaration of Health Results.png" alt="Results" />
+            </div>
+            <div class="case-img-break pair-journey" onclick="openLightbox(1,2)">
+              <img src="Royal London/Royal London - Journey.png" alt="Journey Map" />
+            </div>
+          </div>
+          <div class="case-block case-takeaways">
+            <div class="case-block-label">Takeaways</div>
+            <p>The most valuable thing I did on this project was to reframe the challenge from a form redesign problem to a communication project. We found quickly that the gap was in how we communicated before the form was ever needed. This reframe came directly from listening to customers, and it changed the entire direction of the work.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 Farmacias Peruanas Operations Platform -->
+    <div class="case-card fade-up" style="transition-delay:.2s">
+      <div class="case-header" onclick="toggleCase(this)">
+        <div class="case-num">03</div>
         <div>
           <div class="case-title">Operations Platform</div>
           <div class="case-org">Farmacias Peruanas</div>
@@ -1563,7 +1717,7 @@
                 <li><strong>Modular shipping:</strong> Each module was designed and shipped independently in sprints, with the design system ensuring visual and interaction consistency across the growing suite.</li>
               </ul>
             </div>
-            <div class="case-block-img research-stretch" onclick="openLightbox(0,0)">
+            <div class="case-block-img research-stretch" onclick="openLightbox(2,0)">
               <img src="Farmacias peruanas/Farmacias peruanas research 1.jpg" alt="Research" />
             </div>
             <div class="case-block">
@@ -1583,13 +1737,13 @@
             </div>
           </div>
           <div class="case-img-pair">
-            <div class="case-img-break pair-result" onclick="openLightbox(0,1)">
+            <div class="case-img-break pair-result" onclick="openLightbox(2,1)">
               <img src="Farmacias peruanas/Farmacias peruanas result.png" alt="Result" />
             </div>
             <div class="case-img-break pair-journey case-carousel"
                  data-imgs='["Farmacias peruanas/Farmacias peruanas journey 1.png","Farmacias peruanas/Farmacias peruanas journey 2.png","Farmacias peruanas/Farmacias peruanas journey 3.png","Farmacias peruanas/Farmacias peruanas journey 4.png","Farmacias peruanas/Farmacias peruanas journey 5.png","Farmacias peruanas/Farmacias peruanas journey 6.png","Farmacias peruanas/Farmacias peruanas journey 7.png"]'
                  data-lb='[2,3,4,5,6,7,8]' data-idx="0"
-                 onclick="openLightbox(0, JSON.parse(this.dataset.lb)[+this.dataset.idx])">
+                 onclick="openLightbox(2, JSON.parse(this.dataset.lb)[+this.dataset.idx])">
               <img src="Farmacias peruanas/Farmacias peruanas journey 1.png" alt="Journey" />
               <button class="chev chev-prev" onclick="event.stopPropagation(); carouselStep(this.closest('.case-carousel'), -1)">&#8249;</button>
               <button class="chev chev-next" onclick="event.stopPropagation(); carouselStep(this.closest('.case-carousel'),  1)">&#8250;</button>
@@ -1598,157 +1752,6 @@
           <div class="case-block case-takeaways">
             <div class="case-block-label">Takeaways</div>
             <p>Designing a design system before designing screens felt counterintuitive under that kind of time pressure, but it was the right call. Every subsequent module was faster to design and more consistent because the components already existed. The driver app taught me that designing for high-stress, low-connectivity environments requires ruthless simplicity: every confirmation step, every error state, every empty state matters when someone is working in the field and does not have time to figure out what went wrong.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 02 Autodesk Design System Migration -->
-    <div class="case-card fade-up" style="transition-delay:.1s">
-      <div class="case-header" onclick="toggleCase(this)">
-        <div class="case-num">02</div>
-        <div>
-          <div class="case-title">Design System Migration</div>
-          <div class="case-org">Autodesk Construction Cloud</div>
-        </div>
-        <div class="case-toggle">+</div>
-      </div>
-      <div class="case-body">
-        <div class="case-body-inner">
-          <div class="case-grid">
-            <div class="case-block">
-              <div class="case-block-label">Context</div>
-              <p>Autodesk Construction Cloud had been acquiring products to unify them into a single platform. BuildingConnected Pro was one of those products, and it had its own visual identity with distinct colours, navigation patterns and components that did not exist in Alloy, the shared design system for the entire ACC platform. Embedded in the Autodesk team as a contractor, my role was to work out how to migrate those unique elements into Alloy without breaking the experience for existing users or compromising the system's consistency.</p>
-            </div>
-            <div class="case-block">
-              <div class="case-block-label">Problem</div>
-              <p>BCpro had components that had no equivalent in Alloy, and a colour palette with strong contrast that the neutral Alloy palette did not replicate. The challenge was not just applying new styles. It was redesigning specific components so they could be absorbed into the shared library while still feeling right to people who had been using BCpro for years.</p>
-            </div>
-            <div class="case-block">
-              <div class="case-block-label">Design Process</div>
-              <ul>
-                <li><strong>Audit and sitemap:</strong> Audited existing screens and built a sitemap to understand the full scope of what needed to change and identify which flows contained components requiring custom work.</li>
-                <li><strong>System deep-dive:</strong> Read through the Alloy documentation and libraries thoroughly before designing anything, to understand what already existed and where the genuine gaps were.</li>
-                <li><strong>Component redesign:</strong> Designed new versions of BCpro-specific components including status buttons, cards, modals and colour usage, preserving interaction patterns users were familiar with while aligning them to Alloy guidelines.</li>
-                <li><strong>State documentation:</strong> Documented each component with full interaction states (default, hover, pressed, focused) for development handoff.</li>
-                <li><strong>Staged delivery:</strong> Delivered changes in stages so the engineering team could plan the workload incrementally rather than facing a single large migration.</li>
-              </ul>
-            </div>
-            <div class="case-block-img research-stretch" onclick="openLightbox(1,0)">
-              <img src="Autodesk/Autodesk research.png" alt="Research" />
-            </div>
-            <div class="case-block">
-              <div class="case-block-label">Outcomes</div>
-              <div class="outcome-chips">
-                <span class="outcome-chip">Cards, modals, status buttons and key colour decisions migrated to Alloy</span>
-                <span class="outcome-chip">New components contributed back to the shared Alloy library for the ACC platform</span>
-                <span class="outcome-chip">Full interaction state documentation delivered to engineering for each component</span>
-                <span class="outcome-chip">Colour palette updated and optimised for colour blind users</span>
-                <span class="outcome-chip">Delivered in staged increments to reduce engineering risk</span>
-              </div>
-            </div>
-            <div class="case-block">
-              <div class="case-block-label">Solution</div>
-              <p>A set of redesigned BCpro components built to fit within the Alloy system without requiring users to relearn the product. Each component was designed with the existing Alloy guidelines as a constraint, not a starting point, which meant understanding where the system had room for variation and where it did not. The staged delivery approach meant the engineering team could work through the migration incrementally, with full documentation for each component before any build work started.</p>
-            </div>
-          </div>
-          <div class="case-img-pair">
-            <div class="case-img-break pair-result case-carousel"
-                 data-imgs='["Autodesk/Autodesk result 1.png","Autodesk/Autodesk result 2.png","Autodesk/Autodesk result 3.png"]'
-                 data-lb='[1,3,5]' data-idx="0"
-                 onclick="openLightbox(1, JSON.parse(this.dataset.lb)[+this.dataset.idx])">
-              <img src="Autodesk/Autodesk result 1.png" alt="Result" />
-              <button class="chev chev-prev" onclick="event.stopPropagation(); carouselStep(this.closest('.case-carousel'), -1)">&#8249;</button>
-              <button class="chev chev-next" onclick="event.stopPropagation(); carouselStep(this.closest('.case-carousel'),  1)">&#8250;</button>
-            </div>
-            <div class="case-img-break pair-journey case-carousel"
-                 data-imgs='["Autodesk/Autodesk journey 1.png","Autodesk/Autodesk journey 2.png","Autodesk/Autodesk journey 3.png"]'
-                 data-lb='[2,4,6]' data-idx="0"
-                 onclick="openLightbox(1, JSON.parse(this.dataset.lb)[+this.dataset.idx])">
-              <img src="Autodesk/Autodesk journey 1.png" alt="Journey" />
-              <button class="chev chev-prev" onclick="event.stopPropagation(); carouselStep(this.closest('.case-carousel'), -1)">&#8249;</button>
-              <button class="chev chev-next" onclick="event.stopPropagation(); carouselStep(this.closest('.case-carousel'),  1)">&#8250;</button>
-            </div>
-          </div>
-          <div class="case-block case-takeaways">
-            <div class="case-block-label">Takeaways</div>
-            <p>Working within an established design system means the hardest decisions are rarely about aesthetics. They happen when the system does not have an answer for something your product needs, and you have to decide whether to bend the system or redesign the component. We had several of those moments with BCpro. What got us through them was testing quickly with real users rather than debating in the abstract. That approach built confidence in the decisions in a way that no amount of internal discussion could, because the reasoning was grounded in actual behaviour rather than preference.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 03 NHS AfterCare+ -->
-    <div class="case-card fade-up" style="transition-delay:.2s">
-      <div class="case-header" onclick="toggleCase(this)">
-        <div class="case-num">03</div>
-        <div>
-          <div class="case-title">AfterCare+</div>
-          <div class="case-org">NHS Pioneer Centre</div>
-        </div>
-        <div class="case-toggle">+</div>
-      </div>
-      <div class="case-body">
-        <div class="case-body-inner">
-          <div class="case-grid">
-            <div class="case-block">
-              <div class="case-block-label">Context</div>
-              <p>NHS Pioneer Wound Healing and Lymphoedema Centres treat patients with chronic, complex conditions. Lymphoedema is a lifelong condition managed through daily self-care, compression garments and regular clinic visits. Four in ten patients with chronic wounds see their condition return within six months of completing treatment. This was my MA major project at UAL, developed over six months in direct collaboration with the Pioneer Centre clinical team.</p>
-            </div>
-            <div class="case-block">
-              <div class="case-block-label">Problem</div>
-              <p>Once patients finished their treatment programme, there was no structured digital support to help them manage independently, track their progress, or stay connected with their care team. Nurses had no way to send personalised resources or monitor patients between appointments. The challenge was to design a two-sided product that served patients and nurses with very different needs and contexts, without adding friction to an already stretched clinical workflow.</p>
-            </div>
-            <div class="case-block">
-              <div class="case-block-label">Design Process</div>
-              <ul>
-                <li><strong>Discovery:</strong> Conducted five in-depth interviews with nurses, one observation day in clinic, five patient interviews and a workshop with the patient advisory group to map the gaps in the current aftercare journey.</li>
-                <li><strong>Synthesis:</strong> Identified two distinct user types with conflicting constraints: patients who needed simple, reassuring guidance on a personal device, and nurses who needed to manage multiple patients efficiently from a shared tablet.</li>
-                <li><strong>Interaction design:</strong> Designed separate interfaces for each user type. The patient app centres on health data tracking, personalised resources and direct messaging with the care team. The nurse dashboard enables patient management, care collection creation, anatomical annotation and appointment scheduling.</li>
-                <li><strong>Prototyping and testing:</strong> Built interactive prototypes in Figma for both interfaces, tested with users from the advisory group and iterated on information architecture, data presentation and navigation based on feedback.</li>
-              </ul>
-            </div>
-            <div class="case-block-img research-stretch" onclick="openLightbox(2,0)">
-              <video src="NHS/AfterCare- video.mp4" autoplay muted loop playsinline></video>
-            </div>
-            <div class="case-block">
-              <div class="case-block-label">Outcomes</div>
-              <div class="outcome-chips">
-                <span class="outcome-chip">Two fully interactive prototypes: patient mobile app and nurse tablet dashboard</span>
-                <span class="outcome-chip">Health data tracking across weight, limb circumference and blood pressure with history</span>
-                <span class="outcome-chip">Personalised resource library with nurse-curated collections per patient</span>
-                <span class="outcome-chip">Emergency consult flow with clinical triage criteria</span>
-                <span class="outcome-chip">Anatomical sketch tool for nurses to annotate and share wound documentation</span>
-                <span class="outcome-chip">Presented to NHS Pioneer Centre clinical team as a viable strategic direction</span>
-              </div>
-            </div>
-            <div class="case-block">
-              <div class="case-block-label">Solution</div>
-              <p>AfterCare+ is a two-sided digital platform. The patient-facing mobile app gives people a personalised home showing reminders, health data, shared resources and direct access to their nurse. Health metrics are tracked over time with goal-setting, giving patients visibility of their own progress. The nurse-facing tablet app provides a patient dashboard with key metrics at a glance, a tool for creating and sharing personalised care collections, an anatomical sketch tool for wound documentation, and appointment scheduling. Both interfaces were designed to work independently but feel like parts of the same connected system.</p>
-            </div>
-          </div>
-          <div class="proto-pair">
-            <a class="proto-card proto-card--phone" href="https://www.figma.com/proto/N5kzwV30pBV4nVJFdVedkv/Patient-App---AfterCare?page-id=0%3A1&node-id=1-44770&p=f&viewport=-149%2C110%2C0.29&t=6XakZDNb2SSG3Xbo-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=6%3A529" target="_blank" rel="noopener" aria-label="Try patient app prototype">
-              <img src="NHS/AfterCare-patient.gif" alt="Patient iPhone app prototype" />
-              <div class="proto-label">Patient · iPhone</div>
-              <div class="proto-overlay">
-                <span class="proto-cta">Try prototype →</span>
-              </div>
-            </a>
-            <a class="proto-card proto-card--ipad" href="https://www.figma.com/proto/zl8C9EIqJ2LaoO6NFysYHq/Nurse-App---AfterCare?page-id=0%3A1&node-id=16-2052&p=f&viewport=258%2C168%2C0.18&t=KBApdiVnWPVHDgz5-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1%3A2" target="_blank" rel="noopener" aria-label="Try clinician iPad app prototype">
-              <img src="NHS/AfterCare-ipad.gif" alt="Clinician iPad app prototype" />
-              <div class="proto-label">Clinician · iPad</div>
-              <div class="proto-overlay">
-                <span class="proto-cta">Try prototype →</span>
-              </div>
-            </a>
-            <div class="proto-card proto-card--journey" onclick="openLightbox(2,1)">
-              <img src="NHS/AfterCare - Journey.png" alt="User journey map" />
-            </div>
-          </div>
-          <div class="case-block case-takeaways">
-            <div class="case-block-label">Takeaways</div>
-            <p>Designing for two users with fundamentally different contexts taught me how important it is to resist the temptation to merge interfaces. The nurse app and patient app share data but are completely separate products with separate interaction patterns. Getting the data hierarchy right on the patient app was the hardest part: people managing chronic conditions are logging multiple metrics regularly, and showing that data in a way that feels encouraging rather than clinical required many iterations.</p>
           </div>
         </div>
       </div>
@@ -1891,6 +1894,7 @@
     const wasOpen = !!document.querySelector('.case-card.open');
     document.querySelectorAll('.case-card.open').forEach(c => c.classList.remove('open'));
     cards[index].classList.add('open');
+    setTimeout(seekPosterFrames, 120);
     setTimeout(() => {
       const nav  = document.querySelector('nav') || document.querySelector('header');
       const navH = nav ? nav.offsetHeight : 0;
@@ -1902,6 +1906,19 @@
   /* ── Lightbox ───────────────────────────────────────────── */
   const projectImages = [
     [
+      'Frilea/Workshop.png',
+      'Frilea/Working.png',
+      'Frilea/Tribu_v2.mp4',
+      'Frilea/Quadre_v2.mp4',
+      'Frilea/Freelea_v2.mp4',
+      'Frilea/Research.png'
+    ],
+    [
+      'Royal London/Declaration of health research.png',
+      'Royal London/Declaration of Health Results.png',
+      'Royal London/Royal London - Journey.png'
+    ],
+    [
       'Farmacias peruanas/Farmacias peruanas research 1.jpg',
       'Farmacias peruanas/Farmacias peruanas result.png',
       'Farmacias peruanas/Farmacias peruanas journey 1.png',
@@ -1911,19 +1928,6 @@
       'Farmacias peruanas/Farmacias peruanas journey 5.png',
       'Farmacias peruanas/Farmacias peruanas journey 6.png',
       'Farmacias peruanas/Farmacias peruanas journey 7.png'
-    ],
-    [
-      'Autodesk/Autodesk research.png',
-      'Autodesk/Autodesk result 1.png',
-      'Autodesk/Autodesk journey 1.png',
-      'Autodesk/Autodesk result 2.png',
-      'Autodesk/Autodesk journey 2.png',
-      'Autodesk/Autodesk result 3.png',
-      'Autodesk/Autodesk journey 3.png'
-    ],
-    [
-      'NHS/AfterCare- video.mp4',
-      'NHS/AfterCare - Journey.png'
     ]
   ];
 
@@ -1940,6 +1944,40 @@
     showLbItem();
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
+    document.querySelectorAll('.proto-card--concept video').forEach(v => v.pause());
+  }
+
+  /* ── Concept video poster frames ───────────────────────── */
+  function seekPosterFrames() {
+    document.querySelectorAll('.case-card.open video[data-poster-time]').forEach(v => {
+      const t = parseFloat(v.dataset.posterTime);
+      if (!t || !v.paused) return;
+      v.play().then(() => {
+        v.currentTime = t;
+        // Poll until we're within 0.15s of the target, then pause
+        const check = setInterval(() => {
+          if (Math.abs(v.currentTime - t) < 0.15) {
+            v.pause();
+            clearInterval(check);
+          }
+        }, 30);
+        setTimeout(() => clearInterval(check), 6000); // safety timeout
+      }).catch(() => {});
+    });
+  }
+
+  /* ── Concept video cards ────────────────────────────────── */
+  function handleVideoCard(card, project, idx) {
+    const video = card.querySelector('video');
+    if (!video) return;
+    if (video.paused) {
+      video.currentTime = 0;
+      video.play();
+      card.querySelector('.proto-overlay').style.opacity = '0';
+    } else {
+      video.pause();
+      openLightbox(project, idx);
+    }
   }
 
   /* ── Lightbox zoom / pan ────────────────────────────────── */
@@ -2044,7 +2082,7 @@
     const isOpen  = card.classList.contains('open');
     const targetY = card.getBoundingClientRect().top;
     document.querySelectorAll('.case-card.open').forEach(c => c.classList.remove('open'));
-    if (!isOpen) card.classList.add('open');
+    if (!isOpen) { card.classList.add('open'); setTimeout(seekPosterFrames, 120); }
     const end = performance.now() + 560;
     (function pin() {
       const diff = card.getBoundingClientRect().top - targetY;
@@ -2179,6 +2217,45 @@
         cards.forEach(c => c.classList.remove('bfeature-active'));
         showPreview(defaultSrc, defaultScale);
       }
+    });
+  })();
+
+  /* ── Poster-frame picker (dev tool) ─────────────────────── */
+  (function() {
+    const tool = document.createElement('div');
+    tool.id = 'poster-tool';
+    tool.style.cssText = 'position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:rgba(20,10,30,.92);color:#fff;padding:.55rem 1.1rem;border-radius:100px;font-family:monospace;font-size:.8rem;display:none;align-items:center;gap:.65rem;z-index:99999;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.4);';
+    tool.innerHTML = `
+      <span id="pt-name" style="color:#47E975;font-weight:700"></span>
+      <button id="pt-m1"  style="background:none;border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:4px;padding:.1rem .45rem;cursor:pointer;font-family:monospace">-1s</button>
+      <button id="pt-mf"  style="background:none;border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:4px;padding:.1rem .45rem;cursor:pointer;font-family:monospace">◀</button>
+      <span   id="pt-time" style="min-width:4.5ch;text-align:center;font-size:.85rem"></span>
+      <button id="pt-pf"  style="background:none;border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:4px;padding:.1rem .45rem;cursor:pointer;font-family:monospace">▶</button>
+      <button id="pt-p1"  style="background:none;border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:4px;padding:.1rem .45rem;cursor:pointer;font-family:monospace">+1s</button>
+    `;
+    document.body.appendChild(tool);
+
+    let ptVideo = null;
+    const ptTime = () => document.getElementById('pt-time');
+    const ptName = () => document.getElementById('pt-name');
+
+    function ptUpdate() {
+      if (ptVideo) ptTime().textContent = ptVideo.currentTime.toFixed(2) + 's';
+    }
+
+    document.getElementById('pt-m1').onclick = e => { e.stopPropagation(); if (ptVideo) { ptVideo.currentTime = Math.max(0, ptVideo.currentTime - 1); ptUpdate(); } };
+    document.getElementById('pt-mf').onclick = e => { e.stopPropagation(); if (ptVideo) { ptVideo.currentTime = Math.max(0, ptVideo.currentTime - 0.033); ptUpdate(); } };
+    document.getElementById('pt-pf').onclick = e => { e.stopPropagation(); if (ptVideo) { ptVideo.currentTime = Math.min(ptVideo.duration || 99, ptVideo.currentTime + 0.033); ptUpdate(); } };
+    document.getElementById('pt-p1').onclick = e => { e.stopPropagation(); if (ptVideo) { ptVideo.currentTime = Math.min(ptVideo.duration || 99, ptVideo.currentTime + 1); ptUpdate(); } };
+
+    document.querySelectorAll('.proto-card--concept').forEach(card => {
+      const v = card.querySelector('video');
+      const label = v.src.split('/').pop().replace('_v2.mp4','');
+      card.addEventListener('mouseenter', () => {
+        if (v.paused) { ptVideo = v; ptName().textContent = label; ptUpdate(); tool.style.display = 'flex'; }
+      });
+      card.addEventListener('mouseleave', () => { tool.style.display = 'none'; ptVideo = null; });
+      v.addEventListener('seeked', ptUpdate);
     });
   })();
 

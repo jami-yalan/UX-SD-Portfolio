@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Poster Frame Picker — Frilea</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0f0a18;
+      color: #fff;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #47E975;
+      margin-bottom: 2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: #1a0f2e;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .card-title {
+      padding: .75rem 1rem .5rem;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #47E975;
+    }
+
+    video {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      display: block;
+      background: #000;
+      cursor: pointer;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .75rem 1rem;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+
+    .time-display {
+      flex: 1;
+      text-align: center;
+      font-family: monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: .05em;
+    }
+
+    button {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      color: #fff;
+      border-radius: 6px;
+      padding: .3rem .6rem;
+      cursor: pointer;
+      font-family: monospace;
+      font-size: .82rem;
+      transition: background .15s;
+      white-space: nowrap;
+    }
+    button:hover { background: rgba(255,255,255,.18); }
+
+    .result {
+      margin-top: 2rem;
+      background: #1a0f2e;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid rgba(71,233,117,.2);
+    }
+
+    .result h2 {
+      font-size: .7rem;
+      font-weight: 400;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #47E975;
+      margin-bottom: .85rem;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .result-item {
+      text-align: center;
+    }
+    .result-label {
+      font-size: .7rem;
+      color: rgba(255,255,255,.45);
+      margin-bottom: .3rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .result-value {
+      font-family: monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .copy-hint {
+      margin-top: .85rem;
+      font-size: .72rem;
+      color: rgba(255,255,255,.35);
+      text-align: center;
+    }
+
+    code {
+      background: rgba(255,255,255,.08);
+      border-radius: 4px;
+      padding: .1em .4em;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Poster Frame Picker — Frilea concept videos</h1>
+
+<div class="grid">
+  <div class="card">
+    <div class="card-title">Tribu</div>
+    <video id="v-tribu" src="Frilea/Tribu_v2.mp4" preload="metadata"></video>
+    <div class="controls">
+      <button onclick="step('tribu',-1)">-1s</button>
+      <button onclick="step('tribu',-.033)">◀</button>
+      <div class="time-display"><span id="t-tribu">0.00</span>s</div>
+      <button onclick="step('tribu',.033)">▶</button>
+      <button onclick="step('tribu',1)">+1s</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Quadre</div>
+    <video id="v-quadre" src="Frilea/Quadre_v2.mp4" preload="metadata"></video>
+    <div class="controls">
+      <button onclick="step('quadre',-1)">-1s</button>
+      <button onclick="step('quadre',-.033)">◀</button>
+      <div class="time-display"><span id="t-quadre">0.00</span>s</div>
+      <button onclick="step('quadre',.033)">▶</button>
+      <button onclick="step('quadre',1)">+1s</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Freelea</div>
+    <video id="v-freelea" src="Frilea/Freelea_v2.mp4" preload="metadata"></video>
+    <div class="controls">
+      <button onclick="step('freelea',-1)">-1s</button>
+      <button onclick="step('freelea',-.033)">◀</button>
+      <div class="time-display"><span id="t-freelea">0.00</span>s</div>
+      <button onclick="step('freelea',.033)">▶</button>
+      <button onclick="step('freelea',1)">+1s</button>
+    </div>
+  </div>
+</div>
+
+<div class="result">
+  <h2>Current timestamps — tell these to Claude</h2>
+  <div class="result-grid">
+    <div class="result-item">
+      <div class="result-label">Tribu</div>
+      <div class="result-value" id="r-tribu">0.00s</div>
+    </div>
+    <div class="result-item">
+      <div class="result-label">Quadre</div>
+      <div class="result-value" id="r-quadre">0.00s</div>
+    </div>
+    <div class="result-item">
+      <div class="result-label">Freelea</div>
+      <div class="result-value" id="r-freelea">0.00s</div>
+    </div>
+  </div>
+  <div class="copy-hint">Click a video to play/pause. Use ◀ ▶ to step frame by frame. Then tell Claude: <code>"Tribu: Xs, Quadre: Xs, Freelea: Xs"</code></div>
+</div>
+
+<script>
+  const videos = {
+    tribu:  document.getElementById('v-tribu'),
+    quadre: document.getElementById('v-quadre'),
+    freelea: document.getElementById('v-freelea'),
+  };
+
+  Object.entries(videos).forEach(([name, v]) => {
+    v.addEventListener('click', () => {
+      v.paused ? v.play() : v.pause();
+    });
+    v.addEventListener('timeupdate', () => update(name));
+    v.addEventListener('seeked',     () => update(name));
+  });
+
+  function step(name, delta) {
+    const v = videos[name];
+    v.pause();
+    v.currentTime = Math.max(0, Math.min(v.duration || 99, v.currentTime + delta));
+  }
+
+  function update(name) {
+    const t = videos[name].currentTime.toFixed(2);
+    document.getElementById('t-' + name).textContent = t;
+    document.getElementById('r-' + name).textContent = t + 's';
+  }
+</script>
+</body>
+</html>
