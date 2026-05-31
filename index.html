@@ -242,13 +242,13 @@
     .research-stretch { align-self: stretch; display: flex; flex-direction: column; }
     .research-stretch img { flex: 1; min-height: 0; width: 100%; object-fit: contain; object-position: center top; background: var(--bg); display: block; }
     .case-takeaways { margin-top: 1.5rem; }
-    .case-img-pair { display: flex; gap: 1rem; margin: 2rem 0; align-items: flex-start; }
+    .case-img-pair { display: flex; gap: 3rem; margin: 2rem 0; align-items: flex-start; }
     .case-img-pair .case-img-break { margin: 0; }
-    .pair-result { flex-shrink: 0; max-width: 45%; }
-    .pair-result img { width: 100%; height: auto; display: block; }
-    .pair-journey { flex: 1; min-width: 0; }
+    .pair-result { flex: 0 0 auto; }
+    .pair-result img { height: 360px; width: auto; display: block; }
+    .pair-journey { flex: 0 0 auto; }
     .pair-journey .case-img-break { background: #fff; }
-    .pair-journey img { width: 100%; height: auto; display: block; }
+    .pair-journey img { height: 360px; width: auto; display: block; }
 
     /* FOOTER */
     footer { padding: 3.5rem 4rem; border-top: 1px solid var(--border-soft); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 2rem; }
@@ -278,7 +278,8 @@
     .img-carousel-slide.active { display: block; }
     .img-carousel-slide img { width: 100%; height: auto; display: block; cursor: zoom-in; }
     /* pair-result variant */
-    .img-carousel.pair-result { flex-shrink: 0; max-width: 45%; }
+    .img-carousel.pair-result { flex: 0 0 auto; }
+    .img-carousel.pair-result .img-carousel-slide img { height: 360px; width: auto; }
     /* nav buttons */
     .img-carousel-btn {
       position: absolute; top: 50%; transform: translateY(-50%);
@@ -403,9 +404,11 @@
       .research-stretch img,
       .research-stretch video { flex: none; height: auto; }
       .case-img-pair { flex-direction: column; }
-      .pair-result { flex-shrink: unset; max-width: 100%; }
+      .pair-result { flex: 1 1 auto; max-width: 100%; }
       .pair-result img { width: 100%; height: auto; }
-      .img-carousel.pair-result { max-width: 100%; }
+      .img-carousel.pair-result { flex: 1 1 auto; max-width: 100%; }
+      .img-carousel.pair-result .img-carousel-slide img { height: auto; width: 100%; }
+      .pair-journey { flex: 1 1 auto; }
       .pair-journey img { width: 100%; height: auto; }
       .case-grid-3 { grid-template-columns: 1fr 1fr; }
     }
@@ -443,9 +446,11 @@
       .case-grid { grid-template-columns: 1fr; gap: 2rem; }
       .case-takeaways { margin-top: 0; }
       .case-img-pair { margin: 1.5rem 0; flex-direction: column; }
-      .pair-result { flex-shrink: unset; max-width: 100%; }
+      .pair-result { flex: 1 1 auto; max-width: 100%; }
       .pair-result img { width: 100%; height: auto; }
-      .img-carousel.pair-result { max-width: 100%; }
+      .img-carousel.pair-result { flex: 1 1 auto; max-width: 100%; }
+      .img-carousel.pair-result .img-carousel-slide img { height: auto; width: 100%; }
+      .pair-journey { flex: 1 1 auto; }
       .pair-journey img { width: 100%; height: auto; }
       footer { grid-template-columns: 1fr; padding: 2.5rem 1.5rem; gap: 1.25rem; }
       .footer-links { justify-content: flex-start; }
@@ -1167,13 +1172,48 @@
   });
 
   /* ACCORDION */
+  /* IMAGE PAIR HEIGHT EQUALISER */
+  function adjustImagePairs() {
+    document.querySelectorAll('.case-img-pair').forEach(pair => {
+      if (!pair.offsetWidth) return;
+      const children = Array.from(pair.children);
+      if (children.length < 2) return;
+
+      // Mobile: stacked column — reset to CSS-controlled sizing
+      if (window.getComputedStyle(pair).flexDirection === 'column') {
+        pair.querySelectorAll('img').forEach(img => { img.style.height = ''; img.style.width = ''; });
+        return;
+      }
+
+      const getImg = el => el.querySelector('.img-carousel-slide.active img') || el.querySelector('img');
+      const img1 = getImg(children[0]);
+      const img2 = getImg(children[children.length - 1]);
+      if (!img1 || !img2 || !img1.naturalWidth || !img2.naturalWidth) return;
+
+      const r1 = img1.naturalWidth / img1.naturalHeight;
+      const r2 = img2.naturalWidth / img2.naturalHeight;
+      const gap = 48;
+      const H = Math.round((pair.offsetWidth - gap) / (r1 + r2));
+
+      children[0].querySelectorAll('img').forEach(img => { img.style.height = H + 'px'; img.style.width = 'auto'; });
+      children[children.length - 1].querySelectorAll('img').forEach(img => { img.style.height = H + 'px'; img.style.width = 'auto'; });
+    });
+  }
+
+  let _resizeTimer;
+  window.addEventListener('resize', () => { clearTimeout(_resizeTimer); _resizeTimer = setTimeout(adjustImagePairs, 80); }, { passive: true });
+  window.addEventListener('load', adjustImagePairs);
+
   function toggleCase(header) {
     const card   = header.closest('.case-card');
     const isOpen = card.classList.contains('open');
     document.querySelectorAll('.case-card.open').forEach(c => c.classList.remove('open'));
     if (!isOpen) {
       card.classList.add('open');
-      requestAnimationFrame(() => card.scrollIntoView({ behavior: 'instant', block: 'start' }));
+      requestAnimationFrame(() => {
+        card.scrollIntoView({ behavior: 'instant', block: 'start' });
+        adjustImagePairs();
+      });
     }
   }
 
